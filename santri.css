@@ -1,0 +1,446 @@
+/* ========================================================= */
+/* 1. SETUP & GLOBAL STYLES                                  */
+/* ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@700&display=swap');
+
+:root {
+    /* Font Dasar Fleksibel */
+    font-size: clamp(14px, 1.2vw, 16px);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #D4D7AF;
+    color: #333;
+}
+
+/* ========================================================= */
+/* 2. HEADER & LOGO                                          */
+/* ========================================================= */
+.header {
+    background-color: #0b4528;
+    color: white;
+    padding: 10px clamp(15px, 3vw, 20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.logo-section img {
+    height: clamp(45px, 10vw, 85px);
+    margin-right: 10px;
+}
+
+.logo-section h2 {
+    font-size: clamp(0.8rem, 2vw, 1.1rem);
+    margin: 0;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#role-user {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.icon-user {
+    font-size: 1.8rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 5px;
+    border-radius: 50%;
+}
+
+/* ========================================================= */
+/* 3. LAYOUT & DASHBOARD CARDS                               */
+/* ========================================================= */
+.main-container {
+    padding: clamp(10px, 3vw, 20px);
+}
+
+.dashboard-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: clamp(15px, 4vw, 25px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Row Judul & NIS Sejajar */
+.main-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.main-header-row h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    margin: 0;
+    font-weight: 800;
+}
+
+#nisSantri {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(0.6rem, 2.5vw, 0.85rem);
+    color: #0b4528;
+    background: #f0f0f0;
+    padding: 5px 12px;
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    font-weight: bold;
+}
+
+/* ========================================================= */
+/* 4. NAVIGATION & COMPONENTS                                */
+/* ========================================================= */
+.sub-nav, .scroll-x {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Scroll halus di iOS */
+    
+    /* Sembunyikan garis untuk Firefox */
+    scrollbar-width: none; 
+    /* Sembunyikan garis untuk IE & Edge lama */
+    -ms-overflow-style: none; 
+}
+
+/* Sembunyikan garis untuk Chrome, Safari, dan Opera */
+.sub-nav::-webkit-scrollbar, 
+.scroll-x::-webkit-scrollbar {
+    display: none;
+}
+
+.sub-nav button, .sub-nav a {
+    background: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+    color: #666;
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.sub-nav .active {
+    color: #0b4528;
+    border-bottom-color: #0b4528;
+}
+
+/* --- KARTU INFORMASI ABU --- */
+.info-tahsin {
+    background-color: #e8e8e8;
+    border-radius: 8px;
+    padding: clamp(10px, 3vw, 20px);
+    display: flex;
+    gap: clamp(12px, 3vw, 20px);
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.info-tahsin-image {
+    width: clamp(80px, 22vw, 160px);
+    height: clamp(80px, 22vw, 120px);
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.judul-info-awal {
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: clamp(0.85rem, 3.5vw, 1.1rem) !important;
+    font-weight: 800 !important;
+    color: #0b4528 !important;
+    text-transform: uppercase !important;
+    margin: 0 0 10px 0 !important;
+}
+
+.info-left p:not(.judul-info-awal) {
+    font-size: clamp(0.75rem, 2.8vw, 0.95rem);
+    margin: 4px 0;
+    color: #555;
+    display: flex;
+}
+
+.label {
+    width: clamp(55px, 15vw, 85px);
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* ========================================================= */
+/* 5. TABLE SECTION                                          */
+/* ========================================================= */
+.student-event-tabs button {
+    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+    padding: 6px clamp(12px, 4vw, 20px);
+    border-radius: 50px;
+    border: 1px solid #ddd;
+    background: #f3f3f3;
+    cursor: pointer;
+}
+
+.student-event-tabs button.active {
+    background: #0b4528;
+    color: white;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-top: 15px;
+    border-radius: 6px;
+    /* Sembunyikan garis untuk Firefox */
+    scrollbar-width: none; 
+    /* Sembunyikan garis untuk IE & Edge lama */
+    -ms-overflow-style: none;
+}
+
+.info-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 450px;
+}
+
+.info-table th {
+    background-color: #0b4528;
+    color: white;
+    padding: 10px 8px;
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
+    border: none !important; /* Hijau Solid tanpa garis */
+}
+
+.info-table td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-size: clamp(0.7rem, 2.5vw, 0.85rem);
+}
+
+/* ========================================================= */
+/* 6. MEDIA QUERIES HALAMAN DASHBOARD SISWA (OPTIMASI HP)                            */
+/* ========================================================= */
+@media (max-width: 480px) {
+    #role-user { display: none !important; }
+    .header { padding: 8px 12px; }
+    .dashboard-card { padding: 12px; }
+}
+
+@media (max-width: 320px) {
+    #nisSantri { padding: 4px 8px; font-size: 0.55rem; }
+}
+
+/* ========================================================= */
+/* --- BAGIAN ABSEN (Gaya Dashboard Kotak Putih) --- */
+/* ========================================================= */
+
+/* ========================================================= */
+/* 1. Container Utama Kartu Absensi */
+/* ========================================================= */
+
+.attendance-card {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: clamp(15px, 4vw, 25px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.attendance-card h1 {
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* ========================================================= */
+/* --- 2. KARTU RINGKASAN (RESPONSIVE GRID) --- */
+/* ========================================================= */
+.summary-cards {
+    display: grid;
+    /* DEFAULT (Laptop/Tablet): Berjejer sejajar (6 kolom) */
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 12px;
+    margin-bottom: 25px;
+    padding: 10px 0;
+}
+
+.summary-card {
+    background-color: #e8e8e8;
+    padding: 15px 5px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #0b4528;
+    min-height: 85px; /* Menjaga tinggi tetap seragam */
+    transition: transform 0.2s;
+}
+
+.summary-card-value {
+    /* Angka otomatis menyesuaikan ukuran layar */
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: bold;
+    color: #0b4528;
+}
+
+.summary-card-label {
+    /* Teks label kecil dan rapi */
+    font-size: clamp(0.55rem, 1.5vw, 0.75rem);
+    color: #555;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 5px;
+    line-height: 1.2;
+}
+
+/* =========================================== */
+/** 3. MEDIA QUERIES HALAMAN RIWAYAT ABSENSI (mengatur kotak status agar sejajar 2 kotak jika menggunakan hp)
+/* =========================================== */
+
+/* --- RESPONSIVE UNTUK HP (Mobile) --- */
+@media (max-width: 768px) {
+    .summary-cards {
+        /* Di HP: Dibagi menjadi 2 kolom, sisanya ke bawah */
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 8px;
+    }
+
+    .summary-card {
+        padding: 12px 5px;
+        min-height: 75px; /* Ukuran lebih ringkas di HP */
+    }
+}
+
+/* Optimasi khusus layar sangat kecil (320px) */
+@media (max-width: 320px) {
+    .summary-card-label {
+        font-size: 0.55rem;
+    }
+}
+
+/* =============================================== */
+/* --- 4. HEADER BARIS UTAMA (Judul & Export) --- */
+/* ============================================== */
+.main-header-row {
+    display: flex;
+    justify-content: space-between; /* Judul di kiri, Export di kanan */
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.main-header-row h1 {
+    margin: 0;   /* Menghapus margin bawaan H1 agar tidak merusak kesejajaran */
+    padding: 0;
+    line-height: 1; /* Memastikan tinggi teks solid */
+    font-size: clamp(1.1rem, 4vw, 1.8rem);
+    font-weight: bold;
+    color: #333;
+}
+
+/* ========================================================================= */
+/* --- 5. Gaya Tombol Export di Atas (Mirip Badge NIS tapi berbentuk Tombol) */
+/* ========================================================================= */
+.btn-export-top {
+    background-color: #17a2b8;
+    color: white;
+    border: none;
+    padding: clamp(4px, 1.5vw, 8px) clamp(10px, 2vw, 15px);
+    border-radius: 5px; 
+    cursor: pointer;
+    font-weight: bold;
+    font-size: clamp(0.6rem, 2.2vw, 0.85rem);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    transition: 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn-export-top i {
+    font-size: 1.1em;
+    margin-bottom: 1px; /* Kadang ikon perlu sedikit dorongan manual */
+}
+
+.btn-export-top:hover {
+    background-color: #138496;
+    transform: translateY(-1px);
+}
+
+/* =============================================== */
+/* --- 6. FILTER TANGGAL (Tetap Sejajar Lurus) --- */
+/* ============================================== */
+.date-filter {
+    margin-bottom: 25px;
+}
+
+.filter-row {
+    display: flex;
+    flex-direction: row; /* Selalu sejajar samping */
+    gap: clamp(10px, 3vw, 20px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 5px;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+
+.filter-group {
+    display: flex;
+    flex-direction: row; /* Label di samping input */
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.filter-group label {
+    font-weight: bold;
+    font-size: clamp(0.7rem, 2vw, 0.85rem);
+    color: #333;
+}
+
+.filter-group input[type="date"] {
+    padding: 6px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: clamp(0.7rem, 2vw, 0.85rem);
+    background-color: #fafafa;
+}
+
+/* ========================================================= */
+/* 7. MEDIA QUERIES Halaman HALAMAN RIWAYAT ABSENSI                           */
+/* ========================================================= */
+
+/* --- PENYESUAIAN KHUSUS LAYAR 320px --- */
+@media (max-width: 480px) {
+    .main-header-row h1 {
+        font-size: 1rem; /* Judul sedikit mengecil di HP */
+    }
+
+    .btn-export-top {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+    }
+    
+    .filter-row {
+        gap: 10px;
+    }
+}
+

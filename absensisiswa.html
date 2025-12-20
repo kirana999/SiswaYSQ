@@ -3,97 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ABSEN</title>
+    <title>RIWAYAT ABSENSI - YSQ</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="santri.css">
 </head>
 <body>
 
-    <header class="header">
-        <div class="logo-section">
-            <img src="logoYSQ.png" alt="Logo Yayasan">
-            <h2>YAYASAN SAHABAT QUR'AN</h2>
+<header class="header">
+    <div class="logo-section">
+        <img src="logoYSQ.png" alt="Logo Yayasan">
+        <h2>YAYASAN SAHABAT QUR'AN</h2>
+    </div>
+
+    <div class="user-info">
+        <span id="role-user">Santri</span>
+        <i class='bx bx-user-circle icon-user'></i>
+    </div>
+</header>
+
+<div class="main-container">
+    <div class="attendance-card">
+        
+        <div class="main-header-row">
+            <h1>RIWAYAT ABSENSI</h1>
+            <button class="btn-export-top">
+                <i class='bx bxs-file-export'></i> Export Excel
+            </button>
         </div>
-        <div class="user-info">
-            <span>Siswa</span>
-            <i class='bx bx-user'></i> </div>
-    </header>
 
-    <div class="main-container">
-        <div class="attendance-card">
-            <h1>ABSENSI</h1>
+        <div class="sub-nav scroll-x">
+            <a href="dashboardsantri.html">Dashboard</a>
+            <button class="active">Riwayat Absen</button>
+            <button data-dev="true">Raport</button>
+            <button data-dev="true">Student Bill</button>
+        </div>
 
-            <div class="sub-nav">
-                <a href="dashboardsiswa.html">Dashboard</a>
-                <button class="active">Riwayat Absen</button>
-                <button>Raport</button>
-                <button>Student Bill</button>
+        <div class="summary-cards summary-grid">
+            <div class="summary-card">
+                <div class="summary-card-value total">0</div>
+                <div class="summary-card-label">Total Pertemuan</div>
             </div>
+            <div class="summary-card">
+                <div class="summary-card-value hadir">0</div>
+                <div class="summary-card-label">Hadir</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value izin">0</div>
+                <div class="summary-card-label">Izin</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value sakit">0</div>
+                <div class="summary-card-label">Sakit</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value alfa">0</div>
+                <div class="summary-card-label">Alfa</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-value mustamilah">0</div>
+                <div class="summary-card-label">Mustamiah</div>
+            </div>
+        </div>
 
-            <div class="summary-cards">
-                <div class="summary-card">
-                    <div class="summary-card-value">23</div>
-                    <div class="summary-card-label">Total Pertemuan</div>
+        <div class="date-filter">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="start-date">Start Date:</label>
+                    <input type="date" id="start-date">
                 </div>
-                <div class="summary-card">
-                    <div class="summary-card-value">12</div>
-                    <div class="summary-card-label">Hadir</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-value">8</div>
-                    <div class="summary-card-label">Izin</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-value">1</div>
-                    <div class="summary-card-label">Sakit</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-value">1</div>
-                    <div class="summary-card-label">Alfa</div>
-                </div>
-                <div class="summary-card">
-                    <div class="summary-card-value">2</div>
-                    <div class="summary-card-label">Mustamilah</div>
+                <div class="filter-group">
+                    <label for="end-date">End-Date:</label>
+                    <input type="date" id="end-date">
                 </div>
             </div>
+        </div>
 
-            <div class="date-filter">
-                <label>Start Date:</label>
-                <input type="date" value="2023-08-26">
-                <label>End Date:</label>
-                <input type="date" value="2023-09-05">
-                <button>Export Excel</button>
-            </div>
-
+        <div class="table-wrapper">
             <table class="info-table attendance-table">
                 <thead>
                     <tr>
                         <th>Tanggal</th>
-                        <th>Pelajaran</th>
+                        <th>Kelas</th>
                         <th>Jam</th>
                         <th>Catatan</th>
                         <th>Status</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>26/08/2023</td>
-                        <td>Tahsin</td>
-                        <td>08.00 - 09.00</td>
-                        <td></td>
-                        <td><span class="status-hadir">Hadir</span></td>
-                    </tr>
-                    <tr>
-                        <td>26/08/2023</td>
-                        <td>Tahsin</td>
-                        <td>08.00 - 09.00</td>
-                        <td>Asap</td>
-                        <td><span class="status-sakit">Sakit</span></td>
-                    </tr>
-                    </tbody>
+                <tbody id="absensi-body"></tbody>
             </table>
         </div>
-    </div>
 
+    </div>
+</div>
+
+<script src="absensisantri.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script type="module" src="../js/profileSetting.js"></script>
 </body>
 </html>
