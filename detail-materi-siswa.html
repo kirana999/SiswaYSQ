@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Materi - Sahabat Quran</title>
+    <link rel="stylesheet" href="santri.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body class="santri">
+    <div class="main-container santri" id="sqm-detail-materi">
+    <div class="dashboard-card">
+        <div class="main-header-row">
+            <a href="dashboardsiswa.html" class="back-link">
+                <i class='bx bx-arrow-back'></i> Kembali
+            </a>
+            <h1>Detail Materi & Tugas Siswa</h1>
+        </div>
+
+        <div class="detail-materi-layout">
+            <div class="display-section">
+                <div class="materi-display-box">
+                    <h3 class="section-title"><i class="fas fa-book-open"></i> Materi Ajar</h3>
+                    <div class="content-box">
+                        <p>Pelajari letak keluarnya huruf (makhraj) Al-Halq dan Al-Lisyan. Fokus pada pelafalan huruf tenggorokan.</p>
+                    </div>
+                    <div class="file-card-student">
+                        <div class="file-info">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>materi_makharij.pdf</span>
+                        </div>
+                        <a href="#" class="btn-action-green">Unduh Materi</a>
+                    </div>
+                </div>
+
+                <div class="tugas-display-box">
+                    <div class="tugas-header-inline">
+                        <h3 class="section-title"><i class="fas fa-tasks"></i> Instruksi Tugas</h3>
+                        <div class="deadline-badge-top">
+                            <i class="fas fa-calendar-alt"></i> 
+                            <span><strong>Deadline:</strong> 31 Des 2025</span>
+                        </div>
+                    </div>
+                    <div class="content-box">
+                        <p>"Setorkan rekaman suara pelafalan huruf Alif sampai Kho dengan makhraj yang benar."</p>
+                    </div>
+                    <div class="file-card-student task-file">
+                        <div class="file-info">
+                            <i class="fas fa-file-download"></i>
+                            <span>panduan_tugas.pdf</span>
+                        </div>
+                        <a href="#" class="btn-action-green">Lihat Panduan Tugas</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="upload-section">
+                <div class="tugas-upload-box">
+                    <h3 class="section-title"><i class="fas fa-user-edit"></i> Jawaban Anda</h3>
+                    
+                    <form id="submissionForm">
+                        <div class="form-group-student">
+                            <label class="label-with-spacing">Ketik Jawaban/Teks (Opsional):</label>
+                            <textarea class="textarea-sqm" placeholder="Tulis jawaban atau pesan di sini..."></textarea>
+                        </div>
+
+                        <div class="form-group-student audio-upload-box">
+                            <label><i class="fas fa-microphone"></i> Setoran Suara/Audio:</label>
+                            <div class="audio-input-wrapper">
+                                <input type="file" id="audioFile" accept="audio/*" class="input-file-sqm">
+                                <small>Unggah rekaman suara (.mp3, .wav, .ogg)</small>
+                            </div>
+                        </div>
+
+                        <div class="form-group-student">
+                            <label><i class="fas fa-file-upload"></i> Lampirkan File Lain:</label>
+                            <input type="file" class="input-file-sqm">
+                        </div>
+                        <div class="form-group-student">
+                            <label><i class="fas fa-link"></i> Tautan / Link Luar:</label>
+                            <input type="url" placeholder="https://..." class="input-text-sqm">
+                        </div>
+
+                        <button type="submit" class="btn-send-task">
+                            <i class='bx bxs-paper-plane'></i> Kirim Setoran Tugas
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

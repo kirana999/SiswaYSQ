@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DASBOARD siswa</title>
+    <title>DASHBOARD Siswa - Sahabat Quran</title>
     <link rel="stylesheet" href="santri.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -14,10 +14,10 @@
         <img src="logoYSQ.png" alt="Logo YSQ" class="logo" />
         <h2>YAYASAN SAHABAT QUR'AN</h2>
     </div>
-
     <div class="user-info">
-    <span id="role-user">Santri</span>
-    <i class='bx bx-user-circle icon-user'></i> </div>
+        <span id="role-user">Santri</span>
+        <i class='bx bx-user-circle icon-user'></i>
+    </div>
 </header>
 
 <div class="main-container">
@@ -27,32 +27,26 @@
             <div id="nisSantri">YSQSNTRI888</div>
         </div>
 
-        <!-- SUB NAV RESPONSIF -->
         <div class="sub-nav scroll-x">
             <button class="active">Dashboard</button>
-            <a href="absensisiswa.html">Riwayat Absen</a>
+            <a href="absensisiswa.html" style="text-decoration: none;"><button>Riwayat Absen</button></a>
             <button data-dev="true">Raport</button>
             <button data-dev="true">Student Bill</button>
         </div>
-        
 
-        <!-- INFORMASI TAHSHIN CARD -->
         <div class="info-tahsin responsive-card">
             <img src="kelas.jpg" alt="Ruang Kelas" class="info-tahsin-image">
-
             <div class="info-tahsin-body">
-
                 <div class="info-left">
                     <p><strong>INFORMASI KELAS</strong></p>
                     <p><span class="label">Nama</span>: <span id="namaSantri">-</span></p>
                     <p><span class="label">Kategori</span>: <span id="kategori-santri">-</span></p>
                     <p><span class="label">Kelas</span>: <span id="kelas-santri">-</span></p>
-                    <p><span class="label">jadwal</span>: <span id="jadwal-santri">-</span></p>
+                    <p><span class="label">Jadwal</span>: <span id="jadwal-santri">-</span></p>
                 </div>
             </div>
         </div>
 
-        <!-- TAB STUDENT INFO / EVENT -->
         <div class="student-event-section">
             <div class="student-event-tabs scroll-x">
                 <button class="active">Student Info</button>
@@ -65,17 +59,28 @@
                         <tr>
                             <th>NO</th>
                             <th>Subjek</th>
-                            <th>Hari</th>
-                            <th>Jam</th>
+                            <th>Hari/Jam</th>
                             <th>Guru</th>
-                            <th>Materi</th>
+                            <th style="text-align: center;">Materi & Tugas</th>
                         </tr>
                     </thead>
-                    <tbody id="jadwal-body"></tbody>
+                    <tbody id="jadwal-body">
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Makharijul Huruf</strong></td>
+                            <td>Selasa / 08:00</td>
+                            <td>Ust. Ahmad Fauzi</td>
+                            <td style="text-align: center;">
+                                <a href="detail-materi-siswa.html" class="materi-task-link">
+                                    <div class="icon-group">
+                                        <i class='bx bx-task'></i> 
+                                    </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 
