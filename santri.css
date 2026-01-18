@@ -101,50 +101,48 @@ body {
 }
 
 /* ========================================================= */
-/* 4. NAVIGATION & COMPONENTS                                */
+/* 4. NAVIGATION & COMPONENTS (FIXED)                        */
 /* ========================================================= */
 .sub-nav, .scroll-x {
     display: flex;
     overflow-x: auto;
     white-space: nowrap;
-    -webkit-overflow-scrolling: touch; /* Scroll halus di iOS */
-    
-    /* Sembunyikan garis untuk Firefox */
+    -webkit-overflow-scrolling: touch;
     scrollbar-width: none; 
-    /* Sembunyikan garis untuk IE & Edge lama */
     -ms-overflow-style: none; 
 }
 
-/* Sembunyikan garis untuk Chrome, Safari, dan Opera */
-.sub-nav::-webkit-scrollbar, 
-.scroll-x::-webkit-scrollbar {
+.sub-nav::-webkit-scrollbar {
     display: none;
 }
 
-.sub-nav button, .sub-nav a {
+/* Mengatur Link agar mengambil ruang yang sama rata */
+.sub-nav a {
+    text-decoration: none;
+    flex: 1; /* Membuat setiap menu punya lebar yang sama rata */
+    display: flex;
+}
+
+/* Mengatur Tombol di dalam Link */
+.sub-nav button, .sub-nav a button {
     background: transparent;
     border: none;
-    padding: 10px;
+    padding: 15px 10px; /* Menambah padding atas bawah agar area klik luas */
     cursor: pointer;
     font-weight: 600;
     font-size: clamp(0.75rem, 2.5vw, 0.9rem);
     color: #666;
-    text-decoration: none;
-    border-bottom: 3px solid transparent;
-    flex: 1;
+    border-bottom: 4px solid transparent; /* Garis bawah transparan default */
+    width: 100%; /* Tombol memenuhi lebar tag <a> */
     text-align: center;
-    white-space: nowrap;
+    transition: all 0.3s ease;
 }
 
+/* Mengatur Garis saat Aktif */
+.sub-nav a .active, 
 .sub-nav .active {
-    color: #0b4528;
-    border-bottom-color: #0b4528;
-}
-
-/* Khusus untuk menu pertama (Dashboard) agar garisnya lebih rapat ke atas */
-.sub-nav button:first-child, 
-.sub-nav a:first-child {
-    padding-bottom: 1px !important; /* Sesuaikan angka ini (0px - 4px) */
+    color: #0b4528 !important;
+    border-bottom: 4px solid #0b4528 !important; /* Garis bawah hijau tua */
 }
 
 /* --- KARTU INFORMASI ABU --- */
@@ -775,3 +773,899 @@ body {
     font-size: 1.1rem;
 }
 
+/* ========================================================= */
+/* 9. RAPOR SANTRI - PROGRES BELAJAR                    */
+/* ========================================================= */
+
+/* Container Utama: Membagi ruang antara Judul (Kiri) dan Tab (Kanan) */
+.main-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Ini yang mendorong tab ke kanan */
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+/* Memastikan Judul tetap di kiri */
+.main-header-row h1 {
+    margin: 0;
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+}
+
+/* Styling Tab yang sekarang berada di kanan */
+.ysq-header-tabs {
+    display: flex;
+    background: #f1f3f0;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.ysq-tab-btn {
+    padding: 6px 15px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: #888;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.ysq-tab-btn.active {
+    background: #0b4528; /* Hijau Tua YSQ */
+    color: white;
+}
+
+/* AREA KONTEN & FILTER (PROGRES BELAJAR) */
+.ysq-content-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* Baris Filter (Kelas & Periode) */
+.ysq-action-bar {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.ysq-filter-container {
+    display: flex;
+    gap: 20px;
+}
+
+.ysq-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ysq-filter-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0b4528;
+    white-space: nowrap;
+}
+
+/* Box Input Filter (Dropdown & Date) */
+.ysq-filter-box {
+    background: #D9E3C0; /* Warna Krem Khas YSQ [cite: 24] */
+    padding: 8px 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ysq-filter-select, .ysq-date-picker {
+    background: transparent;
+    border: none;
+    color: #0b4528;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    outline: none;
+    font-size: 0.85rem;
+}
+
+/* TABEL MODERN & DETAIL NILAI */
+.ysq-table-modern {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ysq-table-modern th {
+    color: #0b4528;
+    border-bottom: 2.5px solid #0b4528;
+    padding: 15px 10px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+.ysq-table-modern td {
+    padding: 18px 10px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+}
+
+.ysq-btn-detail-small {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.85rem;
+}
+
+/* Detail Nilai (Slide Down) */
+.ysq-detail-container {
+    padding: 25px;
+    background: #fcfcfc;
+    border: 1px solid #f0f0f0;
+    border-radius: 0 0 15px 15px;
+}
+
+.ysq-grid-scores {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.ysq-score-title {
+    text-align: center;
+    color: #0b4528;
+    font-weight: 800;
+    margin-bottom: 15px;
+    font-size: 1rem;
+    text-transform: uppercase;
+}
+
+/* Pills Nilai */
+.ysq-pills-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ysq-pill-score {
+    background: #D9E3C0;
+    padding: 12px 15px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.ysq-pill-score span {
+    color: #0b4528;
+    font-weight: 800;
+}
+
+/* Area Catatan Kualitatif [cite: 9, 16] */
+.ysq-note-area {
+    margin-top: 15px;
+    background: #f1f3f0;
+    padding: 12px 15px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #444;
+    border-left: 4px solid #0b4528;
+    min-height: 45px;
+}
+
+/* Class untuk menyembunyikan baris detail secara default */
+.ysq-is-hidden {
+    display: none !important;
+}
+
+/* Opsional: Tambahkan animasi transisi sederhana agar tidak kaku */
+.ysq-detail-container {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================= */
+/* 10. RAPOR SANTRI - ARSIP RAPOR FINAL (FR.008)            */
+/* ========================================================= */
+
+/* Container List Rapor */
+.ysq-raport-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* Item Baris Rapor */
+.ysq-raport-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+/* Efek Hover untuk Rapor yang Aktif */
+.ysq-raport-item:not(.disabled):hover {
+    border-color: #0b4528;
+    background: #fcfdfa;
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Info Rapor (Ikon & Teks) */
+.raport-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.raport-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+}
+
+.raport-status {
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* Status Warna Sesuai Aturan Bisnis */
+.raport-status.success {
+    color: #27ae60; /* Hijau untuk Diterbitkan */
+}
+
+.raport-status.warning {
+    color: #f39c12; /* Oranye untuk Draft/Proses */
+}
+
+/* Tombol Unduh PDF (FR.008 UI 8.3) */
+.ysq-btn-download {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0b4528;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ysq-btn-download:hover {
+    background: #08361f;
+    box-shadow: 0 4px 8px rgba(11, 69, 40, 0.2);
+}
+
+/* Gaya untuk Rapor yang Belum Terbit (Terkunci) */
+.ysq-raport-item.disabled {
+    background: #f9f9f9;
+    border-style: dashed;
+    opacity: 0.7;
+}
+
+.ysq-btn-lock {
+    background: #ccc;
+    color: #666;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: not-allowed;
+}
+
+/* ========================================================= */
+/* 11. BILLING SECTION                                       */
+/* ========================================================= */
+
+/* Card Billing */
+.ysq-bill-summary-grid {
+    margin-bottom: 30px;
+}
+
+.ysq-bill-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.ysq-bill-card.highlight {
+    border-left: 5px solid #0b4528;
+}
+
+.bill-card-icon {
+    background: #f1f3f0;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #0b4528;
+}
+
+.bill-card-info span { font-size: 0.9rem; color: #666; }
+.bill-card-info h3 { font-size: 1.6rem; color: #0b4528; margin-top: 5px; }
+
+.ysq-btn-pay-now {
+    margin-left: auto;
+    background: #0b4528;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ysq-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.ysq-filter-label {
+    font-weight: 700;
+    color: #0b4528;
+    font-size: 0.9rem;
+}
+
+/* Kotak Periode Modern */
+.ysq-date-picker-custom {
+    padding: 8px 15px;
+    border: 1.5px solid #0b4528;
+    border-radius: 8px;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fbf2;
+    color: #333;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ysq-date-picker-custom:hover {
+    background-color: #f1f5e8;
+}
+
+/* Status Pills Sederhana */
+.ysq-status-pill {
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.pending { 
+    background: #fff8e1; 
+    color: #f57f17; 
+}
+
+.success { 
+    background: #e6f4ea; 
+    color: #1e8e3e; 
+}
+
+.success-icon {
+    color: #1e8e3e;
+    font-size: 1.4rem;
+}
+
+/* Tindakan Buttons */
+.ysq-btn-table-action {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ysq-btn-table-action:hover {
+    background: #f5f5f5;
+    border-color: #999;
+}
+
+/* ========================================================= */
+/* 12. POPUP UPLOAD BUKTI (CENTERED)                         */
+/* ========================================================= */
+/* Update di santri.css */
+.ysq-modal {
+    display: none !important; /* Gunakan !important untuk memastikan tidak bocor */
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Konten Modal Tengah */
+.ysq-modal-content {
+    background: #ffffff;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    
+    /* PENGAMAN: Pastikan tidak ada margin kiri yang aneh */
+    margin: auto; 
+    
+    animation: modalZoomIn 0.3s ease-out;
+}
+
+@keyframes modalZoomIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Status Awal (Belum ada bukti) */
+.danger { 
+    background: #fde8e8; 
+    color: #c81e1e; 
+}
+
+/* Status Menunggu Verifikasi (FR.010) */
+.pending { 
+    background: #fff8e1; 
+    color: #f57f17; 
+}
+
+/* Status Lunas (FR.010) */
+.success { 
+    background: #e6f4ea; 
+    color: #1e8e3e; 
+}
+
+/* Tombol non-aktif saat sedang diverifikasi */
+.ysq-btn-table-action.disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* Tombol Close Pojok Atas */
+.close-btn-top {
+    position: absolute;
+    right: 20px; top: 15px;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Penyesuaian Header agar proporsional */
+.ysq-modal-header-info {
+    background: #5d7a6a;
+    padding: 20px 25px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ysq-modal-header-info i {
+    font-size: 2.5rem;
+}
+
+/* Area Form */
+.ysq-modal-body {
+    padding: 25px;
+}
+
+/* Close button (X) jika ingin ditambahkan di pojok kanan atas modal */
+.close-btn-top {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Header Modal dengan Info Tagihan */
+.ysq-modal-header-info {
+    background: #5d7a6a; /* Hijau pudar sesuai gambar */
+    padding: 20px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.ysq-modal-header-info i {
+    font-size: 2.5rem;
+}
+
+.ysq-bill-details h4 { margin: 0; font-size: 1rem; }
+.ysq-bill-details p { margin: 2px 0 0; font-size: 0.8rem; opacity: 0.9; }
+
+/* Form Content */
+.ysq-modal-body {
+    padding: 25px;
+}
+
+.ysq-form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ysq-form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #444;
+}
+
+.ysq-form-group input, 
+.ysq-form-group textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* File Drop Zone Modern */
+.file-drop-zone {
+    border: 2px dashed #0b4528;
+    background: #f9fbf2;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.file-drop-zone:hover {
+    background: #f1f5e8;
+}
+
+.file-drop-zone i {
+    font-size: 2rem;
+    color: #0b4528;
+    margin-bottom: 10px;
+}
+
+.ysq-btn-submit-payment {
+    width: 100%;
+    background: #0b4528;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Menghilangkan panah atas/bawah pada input number di Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Menghilangkan panah pada Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+/* Mempercantik placeholder angka agar terlihat abu-abu jelas */
+#inputAmount::placeholder {
+    color: #a0a0a0;
+    opacity: 1;
+}
+
+/* ========================================================= */
+/* 13. HALAMAN PEMILIHAN PEMBAYARAN                          */
+/* ========================================================= */
+
+/* Container Instruksi */
+.ysq-instruction-text {
+    background: #fdfdfd;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #0b4528;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Judul Kategori (Bank / E-Wallet) */
+.ysq-payment-section {
+    margin-top: 25px;
+}
+
+.ysq-payment-title {
+    font-size: 1rem;
+    color: #0b4528;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+}
+
+/* Daftar Item Pembayaran */
+.ysq-payment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ysq-payment-item {
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    padding: 18px;
+    border-radius: 16px;
+    border: 1.5px solid #eee;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+/* Efek Hover Item */
+.ysq-payment-item:hover {
+    border-color: #0b4528;
+    background: #f9fbf2;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Ikon Bank/E-Wallet */
+.payment-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.payment-icon img {
+    max-width: 80%;
+}
+
+/* Detail Teks (Nama & Rekening) */
+.payment-details {
+    flex-grow: 1;
+    margin-left: 18px;
+}
+
+.payment-details strong {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.payment-details span {
+    font-size: 0.85rem;
+    color: #777;
+    font-family: 'Courier New', Courier, monospace; /* Membuat nomor rekening lebih mudah dibaca */
+}
+
+/* Badge Metode Terpilih di dalam Modal */
+.ysq-method-badge {
+    background: #f1f5e8;
+    color: #0b4528;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 25px;
+    border: 1px dashed #0b4528;
+}
+
+/* Tombol Kembali (Back) */
+.ysq-btn-back {
+    color: #0b4528;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.ysq-btn-back:hover {
+    transform: scale(1.1);
+}
+
+/** TUNGGAKANAN PEMBAYARAN **/
+.tunggakan-item-popup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #c53030;
+    font-weight: 500;
+}
+
+.tunggakan-item-popup span i {
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+/* ========================================================= */
+/* 14. TOAST NOTIFICATION                                    */
+/* ========================================================= */
+
+.ysq-toast {
+    visibility: hidden;
+    min-width: 300px;
+    background-color: #0b4528; /* Hijau YSQ */
+    color: #fff;
+    text-align: center;
+    border-radius: 12px;
+    padding: 16px;
+    position: fixed;
+    z-index: 11000; /* Di atas modal */
+    left: 50%;
+    top: 30px;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.ysq-toast.show {
+    visibility: visible;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@keyframes fadein {
+    from { top: 0; opacity: 0; }
+    to { top: 30px; opacity: 1; }
+}
+
+@keyframes fadeout {
+    from { top: 30px; opacity: 1; }
+    to { top: 0; opacity: 0; }
+}
+
+/* ========================================================= */
+/* 15. CSS KHUSUS POPUPLIST-TUNGGAKAN                            */
+/* ========================================================= */
+
+.popuplist-tunggakan-overlay {
+    display: none; 
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.popuplist-tunggakan-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.popuplist-tunggakan-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fffafa;
+}
+
+.popuplist-tunggakan-header h3 {
+    margin: 0;
+    color: #c81e1e; /* Merah Peringatan */
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.popuplist-tunggakan-body {
+    padding: 20px 24px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.popuplist-tunggakan-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #fdf2f2;
+    border: 1px solid #fee2e2;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    transition: 0.2s;
+}
+
+.popuplist-tunggakan-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.popuplist-tunggakan-item span {
+    font-weight: 700;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.popuplist-tunggakan-btn {
+    background-color: #0b4528; /* Hijau Yayasan */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.popuplist-tunggakan-btn:hover {
+    background-color: #052e16;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}

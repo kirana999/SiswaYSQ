@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Bill - Sahabat Quran</title>
+    <link rel="stylesheet" href="santri.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body class="ysq-dashboard-wrapper">
+
+    <header class="header">
+        <div class="logo-section">
+            <img src="logoYSQ.png" alt="Logo YSQ" class="logo" />
+            <h2>YAYASAN SAHABAT QUR'AN</h2>
+        </div>
+        <div class="user-info">
+            <span id="role-user">Santri</span>
+            <i class='bx bx-user-circle icon-user'></i>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="dashboard-card">
+            <div class="main-header-row">
+                <h1>STUDENT BILL</h1>
+            </div>
+
+            <div class="sub-nav scroll-x">
+                <a href="dashboardsiswa.html"><button class="nav-btn">Dashboard</button></a>
+                <a href="absensisiswa.html"><button class="nav-btn">Riwayat Absen</button></a>
+                <a href="raportsiswa.html"><button class="nav-btn">Rapor</button></a>
+                <a href="billing.html"><button class="nav-btn active">Student Bill</button></a>
+            </div>
+
+            <section class="ysq-content-card">
+                <div class="ysq-bill-summary-grid">
+                    <div class="ysq-bill-card highlight">
+                        <div class="bill-card-icon"><i class='bx bx-wallet'></i></div>
+                        <div class="bill-card-info">
+                            <span id="label-tagihan-aktif">Tagihan Periode Ini</span>
+                            <h3 id="nominal-tagihan-aktif">Rp 200.000</h3>
+                            
+                            <div id="info-tunggakan" class="ysq-tunggakan-badge">
+                                <i class='bx bx-error-circle'></i> 
+                                Ada tunggakan! <span onclick="openTunggakanModal()" class="ysq-clickable-text" style="text-decoration: underline; cursor: pointer;">Klik di sini</span>
+                            </div>
+                        </div>
+                        <a href="pembayaran.html" style="margin-left: auto; text-decoration: none;">
+                            <button class="ysq-btn-pay-now">Bayar Sekarang</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ysq-action-bar">
+                    <h2 class="ysq-section-title">Riwayat Pembayaran</h2>
+                    <div class="ysq-filter-group">
+                        <label class="ysq-filter-label">Periode:</label>
+                        <input type="month" id="filter-periode" class="ysq-date-picker-custom" onchange="filterDataByMonth(this.value)">
+                    </div>
+                </div>
+
+                <div class="ysq-table-wrapper">
+                    <table class="ysq-table-modern">
+                        <thead>
+                            <tr>
+                                <th>Bulan</th>
+                                <th>Jatuh Tempo</th>
+                                <th>Jumlah</th>
+                                <th>Status</th>
+                                <th>Tindakan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="billing-table-body">
+                            <tr>
+                                <td>Januari 2026</td>
+                                <td>10 Jan 2026</td>
+                                <td>Rp 200.000</td>
+                                <td><span class="ysq-status-pill danger">Belum Ada Bukti Transfer</span></td>
+                                <td>
+                                    <button class="ysq-btn-table-action" onclick="openPaymentModal('Januari 2026', '200.000')">Upload Bukti</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+<div id="tunggakanModal" class="popuplist-tunggakan-overlay">
+    <div class="popuplist-tunggakan-card">
+        <div class="popuplist-tunggakan-header">
+            <h3>Daftar Tunggakan</h3>
+            <button onclick="closeTunggakanModal()" style="background:none; border:none; font-size:24px; cursor:pointer;">&times;</button>
+        </div>
+        <div class="popuplist-tunggakan-body">
+            <div id="popuplist-tunggakan-container"></div>
+        </div>
+    </div>
+</div>
+
+    <div id="paymentModal" class="ysq-modal">
+        <div class="ysq-modal-content">
+            <span class="close-btn-top" onclick="closePaymentModal()">&times;</span>
+            <div class="ysq-modal-header-info">
+                <i class='bx bxs-receipt'></i>
+                <div class="ysq-bill-details">
+                    <h4>Tagihan Iuran</h4>
+                    <p id="billPeriodInfo">Bulan Januari 2026</p>
+                    <p><strong>Jumlah Rp <span id="billAmountInfo">200.000</span></strong></p>
+                </div>
+            </div>
+
+            <div class="ysq-modal-body">
+                <form id="paymentForm">
+                    <div class="ysq-form-group">
+                        <label for="inputAmount">Jumlah Pembayaran (Rp)</label>
+                        <input type="text" id="inputAmount" inputmode="numeric" placeholder="200.000" onkeyup="formatRupiah(this)" required>
+                    </div>
+                    
+                    <div class="ysq-form-group">
+                        <label for="paymentDate">Tanggal Bayar</label>
+                        <input type="date" id="paymentDate" required>
+                    </div>
+
+                    <div class="ysq-form-group">
+                        <label>Upload Bukti Transfer (JPG/PNG)</label>
+                        <div class="file-drop-zone" onclick="document.getElementById('realFileInput').click()" style="cursor: pointer; border: 2px dashed #ccc; padding: 20px; text-align: center; border-radius: 10px;">
+                            <div id="uploadPlaceholder">
+                                <i class='bx bx-cloud-upload' style="font-size: 40px; color: #0b4528;"></i>
+                                <p>Klik untuk pilih file <strong>Bukti Transfer</strong></p>
+                            </div>
+                            <div id="imagePreviewContainer" class="ysq-is-hidden" style="text-align: center;">
+                                <img id="imagePreview" src="#" alt="Preview Bukti" style="max-width: 150px; border-radius: 8px; margin-bottom: 10px; border: 2px solid #0b4528;">
+                                <p style="font-size: 12px; color: #0b4528;"><strong>Gambar dipilih!</strong> Klik untuk ganti.</p>
+                            </div>
+                            <input type="file" hidden id="realFileInput" accept="image/png, image/jpeg" required onchange="previewImage(this)">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="ysq-btn-submit-payment">Kirim Bukti Pembayaran</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="ysq-toast" class="ysq-toast"></div>
+    <script src="billing.js"></script>
+</body>
+</html>
