@@ -1,222 +1,230 @@
 /* ========================================================= */
-/* 1. INISIALISASI PERIODE (Bulan Berjalan)                  */
+/* 1. KONFIGURASI DATA & VARIABEL GLOBAL                     */
 /* ========================================================= */
-function initPeriode() {
-    const periodInput = document.getElementById('filter-periode');
-    const now = new Date();
-    
-    // Set otomatis ke bulan berjalan (Format: YYYY-MM)
-    const currentMonth = now.getFullYear() + "-" + ("0" + (now.getMonth() + 1)).slice(-2);
-    
-    if (periodInput) {
-        periodInput.value = currentMonth;
+const months = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni", 
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+];
+
+let scrollPosition = 0; 
+
+/* ========================================================= */
+/* 2. LOGIKA KONSISTENSI PEMBAYARAN (CORE LOGIC)             */
+/* ========================================================= */
+function hitungStatus(tagihan, dibayar) {
+    const sisa = tagihan - dibayar;
+    let label = "Belum Bayar";
+    let css = "danger";
+
+    if (dibayar > 0 && sisa > 0) {
+        label = "Mencicil";
+        css = "warning";
+    } else if (dibayar >= tagihan && tagihan > 0) {
+        label = "Lunas";
+        css = "success";
+    }
+    return { sisa, label, css };
+}
+
+/* ========================================================= */
+/* 3. LOGIKA UPDATE SUMMARY CARD & BADGE TUNGGAKAN           */
+/* ========================================================= */
+function updateSummaryCard(mode) {
+    const nominalCard = document.getElementById('nominal-tagihan-aktif');
+    const tunggakanBadge = document.querySelector('.ysq-tunggakan-badge'); 
+    let totalSisaSemua = 0;
+
+    if (mode === 'spp') {
+        // Menghitung total sisa dari data 12 bulan
+        months.forEach((_, index) => {
+            const tagihan = 300000;
+            let dibayar = 0;
+            // Simulasi: Januari Lunas, Februari Mencicil
+            if (index === 0) dibayar = 300000; 
+            if (index === 1) dibayar = 150000; 
+            
+            totalSisaSemua += (tagihan - dibayar);
+        });
+    } else {
+        // Menghitung total sisa dari daftar Non-Iuran
+        const rows = document.querySelectorAll('#section-non-iuran .grid-body .grid-row');
+        rows.forEach(row => {
+            if (row.style.display !== 'none') {
+                const sisaText = row.children[3].innerText.replace(/[^0-9]/g, "");
+                totalSisaSemua += parseInt(sisaText) || 0;
+            }
+        });
+    }
+
+    // 1. Update Nominal di Card
+    if (nominalCard) {
+        nominalCard.innerText = `Rp ${totalSisaSemua.toLocaleString('id-ID')}`;
+    }
+
+    // 2. Update Teks Badge Tunggakan (Dinamis)
+    if (tunggakanBadge) {
+        if (totalSisaSemua > 0) {
+            // Jika masih ada sisa bayar
+            tunggakanBadge.innerHTML = `<i class='bx bx-error-circle'></i> Ada tunggakan!`;
+            tunggakanBadge.classList.add('danger');
+            tunggakanBadge.classList.remove('success');
+        } else {
+            // Jika sudah lunas semua (Rp 0)
+            tunggakanBadge.innerHTML = `<i class='bx bx-check-double'></i> Tidak ada tunggakan / Lunas Semua`;
+            tunggakanBadge.classList.add('success');
+            tunggakanBadge.classList.remove('danger');
+        }
     }
 }
 
-// Langsung panggil fungsi inisialisasi
-initPeriode();
-
 /* ========================================================= */
-/* 2. FUNGSI FORMAT RUPIAH (TITIK OTOMATIS)                  */
+/* 4. GENERATE DATA SPP                                      */
 /* ========================================================= */
-const inputNominal = document.getElementById('inputAmount');
+function renderSPPGrid() {
+    const container = document.getElementById('spp-data-container');
+    const selectedYear = document.getElementById('year-filter').value;
+    const selectedStatus = document.getElementById('status-filter').value;
+    
+    if (!container) return;
 
-if (inputNominal) {
-    inputNominal.addEventListener('input', function(e) {
-        // Ambil angka saja dari input
-        let value = this.value.replace(/[^0-9]/g, "");
+    let htmlContent = "";
+    months.forEach((month, index) => {
+        const nominalTagihan = 300000;
+        let totalDibayar = 0;
+        if (index === 0) totalDibayar = 300000; 
+        if (index === 1) totalDibayar = 150000; 
         
-        // Format menjadi ribuan dengan titik menggunakan locale Indonesia
-        if (value !== "") {
-            this.value = new Intl.NumberFormat('id-ID').format(value);
-        } else {
-            this.value = "";
-        }
+        const info = hitungStatus(nominalTagihan, totalDibayar);
+        if (selectedStatus !== "all" && info.css !== selectedStatus) return;
+        
+        htmlContent += `
+            <div class="grid-row">
+                <div class="grid-cell text-left">${month} ${selectedYear}</div>
+                <div class="grid-cell">Rp ${nominalTagihan.toLocaleString('id-ID')}</div>
+                <div class="grid-cell">Rp ${totalDibayar.toLocaleString('id-ID')}</div>
+                <div class="grid-cell">Rp ${info.sisa.toLocaleString('id-ID')}</div>
+                <div class="grid-cell">
+                    <span class="ysq-status-pill ${info.css}">${info.label}</span>
+                </div>
+                <div class="grid-cell">
+                    ${info.label === "Lunas" 
+                        ? `<i class='bx bx-check-circle success-icon'></i>` 
+                        : `<button class="ysq-btn-upload" 
+                                   data-item="SPP ${month} ${selectedYear}" 
+                                   data-amount="${info.sisa.toLocaleString('id-ID')}">
+                                   Konfirmasi
+                           </button>`
+                    }
+                </div>
+            </div>
+        `;
     });
+    container.innerHTML = htmlContent || `<div class="grid-row"><div class="grid-cell" style="grid-column: span 6; padding: 40px; color: #888;">Tidak ada data.</div></div>`;
 }
 
 /* ========================================================= */
-/* 3. KONTROL MODAL (OPEN/CLOSE)                             */
+/* 5. FILTER & VIEW SINKRON                                  */
 /* ========================================================= */
-function openPaymentModal(bulan, jumlah) {
+function setupFilters() {
+    const mainFilter = document.getElementById('main-filter');
+    const yearFilter = document.getElementById('year-filter');
+    const statusFilter = document.getElementById('status-filter');
+    const sppSection = document.getElementById('section-spp-table');
+    const nonIuranSection = document.getElementById('section-non-iuran');
+    const labelCard = document.getElementById('label-total-dinamis');
+    const displayYear = document.getElementById('display-year');
+
+    function updateView() {
+        const mode = mainFilter.value;
+        const year = yearFilter.value;
+        const status = statusFilter.value;
+
+        if (displayYear) displayYear.innerText = year;
+
+        if (mode === 'spp') {
+            sppSection.style.display = 'block';
+            nonIuranSection.style.display = 'none';
+            labelCard.innerText = `Total Tagihan SPP ${year} Belum Lunas`;
+            renderSPPGrid(); 
+        } else {
+            sppSection.style.display = 'none';
+            nonIuranSection.style.display = 'block';
+            labelCard.innerText = `Total Tagihan Non-Iuran ${year} Belum Lunas`;
+            
+            const rows = nonIuranSection.querySelectorAll('.grid-body .grid-row');
+            rows.forEach(row => {
+                const statusPill = row.querySelector('.ysq-status-pill');
+                row.style.display = (status === "all" || statusPill.classList.contains(status)) ? 'grid' : 'none';
+            });
+        }
+        updateSummaryCard(mode);
+    }
+
+    mainFilter.addEventListener('change', updateView);
+    yearFilter.addEventListener('change', updateView);
+    statusFilter.addEventListener('change', updateView);
+    updateView(); 
+}
+
+/* ========================================================= */
+/* 6. MODAL & UTILITY                                        */
+/* ========================================================= */
+function openPaymentModal(item, jumlah) {
     const modal = document.getElementById('paymentModal');
-    
-    // Mengubah display menjadi flex agar muncul ke tengah
-    modal.style.setProperty('display', 'flex', 'important');
-    
-    document.getElementById('billPeriodInfo').innerText = "Bulan " + bulan;
+    scrollPosition = window.pageYOffset;
+    document.body.classList.add('no-scroll');
+    document.body.style.top = `-${scrollPosition}px`;
+    document.getElementById('billPeriodInfo').innerText = item;
     document.getElementById('billAmountInfo').innerText = jumlah;
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('active'), 10);
 }
 
 function closePaymentModal() {
     const modal = document.getElementById('paymentModal');
-    modal.style.setProperty('display', 'none', 'important');
-    
-    // Reset form agar saat dibuka lagi bersih
-    document.getElementById('paymentForm').reset();
-    resetPreview(); 
+    modal.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+    document.body.style.top = '';
+    window.scrollTo(0, scrollPosition);
+    setTimeout(() => {
+        modal.style.display = 'none';
+        document.getElementById('paymentForm').reset();
+    }, 300);
 }
 
-// Tutup modal jika user klik di area luar (overlay)
-window.onclick = function(event) {
-    const modal = document.getElementById('paymentModal');
-    if (event.target == modal) {
-        closePaymentModal();
-    }
-}
-
-/* ========================================================= */
-/* 4. PREVIEW GAMBAR BUKTI TRANSFER                          */
-/* ========================================================= */
-function previewImage(input) {
-    const placeholder = document.getElementById('uploadPlaceholder');
-    const previewContainer = document.getElementById('imagePreviewContainer');
-    const previewImage = document.getElementById('imagePreview');
-
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            // Sembunyikan ikon, tampilkan gambar preview
-            placeholder.style.display = 'none';
-            previewContainer.classList.remove('ysq-is-hidden');
-            previewImage.src = e.target.result;
+function setupModalLogic() {
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('ysq-btn-upload')) {
+            openPaymentModal(e.target.dataset.item, e.target.dataset.amount);
         }
+    });
 
-        reader.readAsDataURL(input.files[0]);
+    const closeBtn = document.getElementById('close-modal');
+    if (closeBtn) closeBtn.onclick = closePaymentModal;
+
+    const inputAmount = document.getElementById('inputAmount');
+    if (inputAmount) {
+        inputAmount.addEventListener('input', function() {
+            let value = this.value.replace(/[^0-9]/g, "");
+            if (value !== "") this.value = new Intl.NumberFormat('id-ID').format(value);
+        });
     }
+
+    document.getElementById('paymentForm')?.addEventListener('submit', function(e) {
+        e.preventDefault();
+        closePaymentModal();
+        showToast("Berhasil! Konfirmasi pembayaran dikirim ke Admin.");
+    });
 }
 
-function resetPreview() {
-    const placeholder = document.getElementById('uploadPlaceholder');
-    const previewContainer = document.getElementById('imagePreviewContainer');
-    const previewImage = document.getElementById('imagePreview');
+setupFilters();
+setupModalLogic();
 
-    if (placeholder) placeholder.style.display = 'block';
-    if (previewContainer) previewContainer.classList.add('ysq-is-hidden');
-    if (previewImage) previewImage.src = "#";
-}
-
-/* ========================================================= */
-/* 5. HANDLING SUBMIT (TOAST & CLOSE)                        */
-/* ========================================================= */
-document.getElementById('paymentForm').onsubmit = function(e) {
-    e.preventDefault(); 
-
-    // 1. Ambil data nominal dan hapus titiknya untuk sistem
-    const formattedValue = document.getElementById('inputAmount').value;
-    const cleanValue = formattedValue.replace(/\./g, "");
-
-    // 2. Tutup Modal Secara Instan
-    closePaymentModal();
-
-    // 3. Tampilkan Toast Notification
-    showToast("Berhasil! Bukti transfer telah dikirim. Status: Menunggu Verifikasi.");
-
-    // Logika pengiriman data (FR.010)
-    console.log("Nominal murni dikirim:", cleanValue);
-};
-
-/* ========================================================= */
-/* 6. FUNGSI TOAST NOTIFICATION                              */
-/* ========================================================= */
 function showToast(message) {
     const toast = document.getElementById('ysq-toast');
     if (toast) {
         toast.innerText = message;
-        toast.className = "ysq-toast show";
-        
-        // Hilangkan toast setelah 3 detik
-        setTimeout(function() { 
-            toast.className = toast.className.replace("show", ""); 
-        }, 3000);
-    }
-}
-
-/* ========================================================= */
-/* 1. KONTROL MODAL TUNGGAKAN                                */
-/* ========================================================= */
-function openTunggakanModal() {
-    const modal = document.getElementById('tunggakanModal');
-    const listContainer = document.getElementById('list-tunggakan-popup');
-    modal.style.setProperty('display', 'flex', 'important');
-
-    // Ambil data yang statusnya 'Belum Ada Bukti Transfer'
-    const tunggakan = dataTagihan.filter(item => item.status === "Belum Ada Bukti Transfer");
-    listContainer.innerHTML = "";
-
-    tunggakan.forEach(item => {
-        const li = document.createElement('li');
-        li.className = "tunggakan-item-popup";
-        li.innerHTML = `
-            <span><i class='bx bx-calendar-exclamation'></i> ${formatBulanIndo(item.bulan)}</span>
-            <button class="btn-bayar-cepat" onclick="gotoPayment('${item.bulan}')">Bayar Sekarang</button>
-        `;
-        listContainer.appendChild(li);
-    });
-}
-
-function closeTunggakanModal() {
-    document.getElementById('tunggakanModal').style.setProperty('display', 'none', 'important');
-}
-
-function gotoPayment(bulan) {
-    closeTunggakanModal(); // Tutup modal tunggakan
-    document.getElementById('filter-periode').value = bulan;
-    filterDataByMonth(bulan); // Arahkan tabel ke bulan tersebut
-    document.querySelector('.ysq-table-wrapper').scrollIntoView({ behavior: 'smooth' });
-}
-
-/* ========================================================= */
-/* FUNGSI TRANSISI: DARI LIST TUNGGAKAN KE PAYMENT           */
-/* ========================================================= */
-function prosesBayarDariPopup(bulan, nominal) {
-    // 1. Tutup modal daftar tunggakan terlebih dahulu
-    closeTunggakanModal();
-    
-    // 2. Gunakan setTimeout agar transisi modal tidak bertabrakan (smooth)
-    setTimeout(() => {
-        // 3. Format nominal agar cantik saat muncul di form (tambah titik)
-        const nominalCantik = new Intl.NumberFormat('id-ID').format(nominal);
-        
-        // 4. Panggil fungsi openPaymentModal yang sudah ada
-        // Gunakan formatBulanIndo untuk mengubah '2026-01' jadi 'Januari 2026'
-        openPaymentModal(formatBulanIndo(bulan), nominalCantik);
-        
-        // 5. Scroll otomatis ke atas modal agar santri langsung melihat form
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 300); 
-}
-
-/* ========================================================= */
-/* UPDATE FUNGSI GENERATE LIST TUNGGAKAN                     */
-/* ========================================================= */
-function scanSemuaTunggakan() {
-    const container = document.getElementById('popuplist-tunggakan-container');
-    const infoBadge = document.getElementById('info-tunggakan');
-    const now = new Date();
-
-    const daftarTunggakan = dataTagihan.filter(item => {
-        return item.status === "Belum Ada Bukti Transfer" && new Date(item.jatuhTempo) < now;
-    });
-
-    if (daftarTunggakan.length > 0) {
-        if (infoBadge) infoBadge.classList.remove('ysq-is-hidden');
-        if (container) {
-            container.innerHTML = "";
-            daftarTunggakan.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "popuplist-tunggakan-item";
-                // Pastikan onclick memanggil fungsi transisi di atas
-                div.innerHTML = `
-                    <span><i class='bx bx-calendar-exclamation'></i> ${formatBulanIndo(item.bulan)}</span>
-                    <button class="popuplist-tunggakan-btn" 
-                        onclick="prosesBayarDariPopup('${item.bulan}', ${item.nominal})">
-                        Bayar
-                    </button>
-                `;
-                container.appendChild(div);
-            });
-        }
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
     }
 }
