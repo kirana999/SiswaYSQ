@@ -1312,9 +1312,10 @@ body {
 /* --- Pengaturan Tabel Utama --- */
 #section-rapor-tahfidz .ysq-table-container {
     border: 1px solid var(--ysq-border);
-    border-radius: 12px 12px 0 0; /* Melengkung hanya di atas agar menyatu dengan baris biru */
+    border-radius: 12px; /* Dibuat melengkung sempurna karena sudah terpisah */
     overflow: hidden;
-    margin-bottom: 0;
+    margin-bottom: 20px; /* Jarak bawah agar tidak menempel ke kartu UAS */
+    background: #ffffff;
 }
 
 #section-rapor-tahfidz .ysq-table-premium {
@@ -1329,86 +1330,82 @@ body {
     padding: 15px 20px;
 }
 
-/* --- Baris Rata-rata Simakan (Sejajar Tanggal) --- */
-#section-rapor-tahfidz .ysq-row-summary {
-    background-color: var(--ysq-green-pale) !important;
-}
+/* ========================================================= */
+/* BAGIAN 10 (2) : SECTION RAPOR TAHFIDZ (LEFT-ALIGNED)      */
+/* ========================================================= */
 
+/* --- Baris Rata-rata Simakan (Di dalam Tabel) --- */
 #section-rapor-tahfidz .ysq-row-summary .label-summary {
-    text-align: right;
-    padding-right: 100px; /* Jarak kunci agar sejajar dengan kolom tengah */
+    text-align: left;
+    padding-left: 25px;
     font-weight: 800;
     color: var(--ysq-green-dark);
 }
 
 #section-rapor-tahfidz .ysq-row-summary .val-total {
+    text-align: center;
+    padding-left: 30px; /* Harus sama dengan padding-left kolom nilai di atas */
+    font-weight: 800;
+}
+
+/* --- KARTU UAS TERPISAH (SEJAJAR KOLOM NILAI) --- */
+.ysq-row-extra-score-isolated {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid var(--ysq-border);
+    border-radius: 12px;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.ysq-row-extra-score-isolated .label-extra {
+    flex: 2; /* Mengambil ruang kolom 1 dan 2 */
+    text-align: left;
+    padding: 18px 25px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ysq-row-extra-score-isolated .value-extra {
+    flex: 1; /* Kolom ke-3 (Sejajar dengan kolom nilai simakan) */
+    text-align: center;
+    padding: 18px 25px 18px 110px; /* Padding-left 110px untuk menjaga keselarasan */
+    font-size: 1.2rem;
     font-weight: 800;
     color: var(--ysq-green-dark);
 }
 
-/* --- Baris Rata-rata Akhir (Biru - Sejajar di Bawah Tabel) --- */
+/* --- BARIS FINAL SCORE (SEJAJAR KOLOM NILAI) --- */
 .ysq-row-final-score {
     display: flex;
-    background-color: #2980b9;
+    background-color: #2980b9; /* Warna biru sesuai referensi */
     color: #ffffff;
-    border-radius: 0 0 12px 12px; /* Melengkung di bawah untuk menutup tabel */
-    overflow: hidden;
-}
-
-/* --- Baris Rata-rata Akhir (Biru) --- */
-.ysq-row-final-score {
-    display: flex;
-    background-color: #2980b9;
-    color: #ffffff;
-    border-radius: 0 0 12px 12px;
-    overflow: hidden;
+    border-radius: 12px;
     width: 100%;
 }
 
 .ysq-row-final-score .label-final {
-    flex: 2; 
-    text-align: right;
-    padding-right: 170px; 
+    flex: 2;
+    text-align: left;
+    padding: 15px 25px;
     font-weight: 800;
-    font-size: 0.9rem;
     text-transform: uppercase;
-    align-self: center;
 }
 
 .ysq-row-final-score .value-final {
     flex: 1;
     text-align: center;
-    padding-right: 35px;
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding: 15px 25px 15px 110px; /* Padding-left 110px agar lurus vertikal */
     font-size: 1.2rem;
     font-weight: 800;
 }
 
+
 /* --- Area Predikat Menonjol --- */
-.ysq-summary-predikat-v2 {
-    margin: 50px 0;
-    text-align: center;
-}
-
-.ysq-summary-predikat-v2 .text-p {
-    font-size: 2.8rem;
-    font-weight: 900;
-    color: #0b4528;
-    text-transform: uppercase;
-    letter-spacing: 8px;
-    display: block;
-}
-
-.ysq-summary-predikat-v2 .decoration-line {
-    width: 80px;
-    height: 5px;
-    background: #f1c40f;
-    margin: 15px auto 0 auto; /* Tengah secara otomatis */
-    border-radius: 10px;
-}
-
-/* --- Area Predikat Sangat Menonjol --- */
 .ysq-summary-predikat-v2 {
     margin: 50px 0;
     padding: 20px;
@@ -1428,19 +1425,18 @@ body {
 }
 
 .ysq-summary-predikat-v2 .text-p {
-    font-size: 2.8rem; /* Ukuran besar untuk focal point */
+    font-size: 2.8rem;
     font-weight: 900;
     color: var(--ysq-green-dark);
     text-transform: uppercase;
-    letter-spacing: 8px; /* Jarak antar huruf mewah */
-    line-height: 1;
-    margin: 10px 0;
+    letter-spacing: 8px;
+    line-height: 1.1;
 }
 
 .ysq-summary-predikat-v2 .decoration-line {
     width: 80px;
     height: 5px;
-    background: #f1c40f; /* Garis emas prestasi */
+    background: #f1c40f;
     border-radius: 10px;
     margin-top: 15px;
 }
@@ -1455,9 +1451,16 @@ body {
 /* Responsif */
 @media (max-width: 600px) {
     #section-rapor-tahfidz .ysq-row-summary .label-summary,
-    .ysq-row-final-score .label-final {
-        padding-right: 30px; /* Jarak disesuaikan untuk layar kecil */
+    .ysq-row-final-score .label-final,
+    .ysq-row-extra-score-isolated .label-extra {
+        padding-right: 30px;
     }
+    
+    .ysq-row-extra-score-isolated .value-extra,
+    .ysq-row-final-score .value-final {
+        padding-right: 10px;
+    }
+
     .ysq-summary-predikat-v2 .text-p {
         font-size: 1.8rem;
         letter-spacing: 4px;
@@ -1825,7 +1828,7 @@ body {
 }
 
 /* ========================================================= */
-/* 14. TOAST NOTIFICATION                                    */
+/* 12. TOAST NOTIFICATION                                    */
 /* ========================================================= */
 
 .ysq-toast {
@@ -1861,7 +1864,7 @@ body {
 }
 
 /* ========================================================= */
-/* 15. CSS KHUSUS POPUPLIST-TUNGGAKAN                            */
+/* 13. CSS KHUSUS POPUPLIST-TUNGGAKAN                            */
 /* ========================================================= */
 
 .popuplist-tunggakan-overlay {
