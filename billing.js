@@ -219,7 +219,6 @@ function setupModalLogic() {
 
 setupFilters();
 setupModalLogic();
-
 function showToast(message) {
     const toast = document.getElementById('ysq-toast');
     if (toast) {
